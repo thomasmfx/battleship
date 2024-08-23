@@ -15,6 +15,14 @@ describe("Ship", () => {
     expect(ship.timesHit).toEqual(1)
   });
 
+  test("ship can be flipped", () => {
+    expect(ship.isFlipped()).toBeFalsy()
+    ship.flip()
+    expect(ship.isFlipped()).toBeTruthy()
+    ship.flip()
+    expect(ship.isFlipped()).toBeFalsy()
+  });
+
   test("returns whether ship has sunk or not", () => {
     expect(ship.isSunk()).toBeFalsy()
   });
@@ -45,9 +53,13 @@ describe("GameBoard", () => {
     expect(firstBoard.grid[x + 4][y]).not.toBe(0);
     
     firstBoard.placeShip('submarine', [a, b]);
-    expect(firstBoard.grid[a][b]).toBeDefined();
-    expect(firstBoard.grid[a + 1][b]).toBeDefined();
-    console.log(firstBoard)
+    expect(firstBoard.grid[a][b]).not.toBe(0);
+    expect(firstBoard.grid[a + 1][b]).not.toBe(0);
+  })
+
+  test("does not allow placing ships out of board or over another ship", () => {
+    expect(canPlaceShip(new Ship('cruiser'), firstBoard.grid, x, y)).toBeFalsy();
+    expect(canPlaceShip(new Ship('cruiser'), firstBoard.grid, -1, 10)).toBeFalsy();
   })
 
   test("registers succesfull attacks", () => {
@@ -64,11 +76,6 @@ describe("GameBoard", () => {
   test("does not allow attacks out of board", () => {
     expect(isOutOfBoard(-1, 10)).toBeTruthy();
     expect(() => firstBoard.receiveAttack(-1, 10)).toThrow(Error);
-  })
-
-  test("does not allow placing ships out of board or over another ship", () => {
-    expect(canPlaceShip(new Ship('cruiser'), firstBoard.grid, x, y)).toBeFalsy();
-    expect(canPlaceShip(new Ship('cruiser'), firstBoard.grid, -1, 10)).toBeFalsy();
   })
 
   test('reports whether all ships are sunk or not', () => {

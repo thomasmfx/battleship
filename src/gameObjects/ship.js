@@ -14,6 +14,7 @@ export class Ship {
     this.length = foundShip.length;
     this.timesHit = 0;
     this.sunk = false;
+    this.vertical = true;
   };
 
   hit() {
@@ -23,5 +24,13 @@ export class Ship {
 
   isSunk() {
     return this.sunk
+  };
+
+  flip() {
+    this.vertical = !this.vertical
+  };
+
+  isFlipped() {
+    return !this.vertical;
   };
 };

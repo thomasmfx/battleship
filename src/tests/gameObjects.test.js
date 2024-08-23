@@ -12,8 +12,7 @@ describe("Ship", () => {
 
   test("'hit()' increases 'timesHit'", () => {
     ship.hit()
-    expect(ship.timesHit).toBeDefined()
-    expect(ship.length).toEqual(4)
+    expect(ship.timesHit).toEqual(1)
   });
 
   test("returns whether ship has sunk or not", () => {
@@ -21,6 +20,7 @@ describe("Ship", () => {
   });
 
   test("ship sunks after receiving as many hits as its length", () => {
+    ship.hit()
     ship.hit()
     ship.hit()
     ship.hit()
@@ -38,18 +38,20 @@ describe("GameBoard", () => {
   
   test("places ship in correct squares according to its length", () => {
     firstBoard.placeShip('carrier', [x, y]);
-    expect(firstBoard.grid[x][y]).toBeDefined();
-    expect(firstBoard.grid[x][y - 1]).toBeDefined();
-    expect(firstBoard.grid[x][y - 2]).toBeDefined();
-    expect(firstBoard.grid[x][y - 3]).toBeDefined();
-
-    firstBoard.placeShip('cruiser', [a, b]);
+    expect(firstBoard.grid[x][y]).not.toBe(0);
+    expect(firstBoard.grid[x + 1][y]).not.toBe(0);
+    expect(firstBoard.grid[x + 2][y]).not.toBe(0);
+    expect(firstBoard.grid[x + 3][y]).not.toBe(0);
+    expect(firstBoard.grid[x + 4][y]).not.toBe(0);
+    
+    firstBoard.placeShip('submarine', [a, b]);
     expect(firstBoard.grid[a][b]).toBeDefined();
-    expect(firstBoard.grid[a][b - 1]).toBeDefined();
+    expect(firstBoard.grid[a + 1][b]).toBeDefined();
+    console.log(firstBoard)
   })
 
   test("registers succesfull attacks", () => {
-    firstBoard.receiveAttack(5, 5)
+    firstBoard.receiveAttack(x, y)
     expect(firstBoard.missedAttacks.length).toEqual(0);
   })
 
@@ -73,7 +75,5 @@ describe("GameBoard", () => {
     expect(secondBoard.areAllShipsSunk()).toBeTruthy();
     secondBoard.placeShip('submarine', [x, y]);
     expect(secondBoard.areAllShipsSunk()).toBeFalsy();
-    secondBoard.receiveAttack(x, y);
-    expect(secondBoard.areAllShipsSunk()).toBeTruthy();
   })
 })

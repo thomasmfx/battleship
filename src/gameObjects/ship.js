@@ -1,8 +1,8 @@
 const shipsArsenal = [
-  { type: 'carrier' , length: 4 },
-  { type: 'battleship', length: 3 },
-  { type: 'cruiser', length: 2 },
-  { type: 'submarine', length: 1 },
+  { type: 'carrier' , length: 5 },
+  { type: 'battleship', length: 4 },
+  { type: 'cruiser', length: 3 },
+  { type: 'submarine', length: 2 },
 ];
 
 export class Ship {

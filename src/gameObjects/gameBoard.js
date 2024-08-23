@@ -49,7 +49,7 @@ export class GameBoard {
     if (!canPlaceShip(ship, this.grid, x, y)) throw new Error("Can't place a ship here")
 
     for (let i = 0; i < length; i++) {
-      this.grid[x][y - i] = ship;
+      this.grid[x + i][y] = ship;
     };
   };
 

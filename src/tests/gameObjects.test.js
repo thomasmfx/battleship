@@ -57,6 +57,13 @@ describe("GameBoard", () => {
     expect(firstBoard.grid[a + 1][b]).not.toBe(0);
   })
 
+  test("places flipped ship", () => {
+    let g = new GameBoard();
+    g.placeShip('submarine', [9, 0], true);
+    expect(g.grid[9][0]).not.toBe(0)
+    expect(g.grid[9][1]).not.toBe(0)
+  })
+
   test("does not allow placing ships out of board or over another ship", () => {
     expect(firstBoard.canPlaceShip(new Ship('cruiser'), x, y)).toBeFalsy();
     expect(firstBoard.canPlaceShip(new Ship('cruiser'), -1, 10)).toBeFalsy();

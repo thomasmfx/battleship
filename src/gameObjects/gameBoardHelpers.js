@@ -29,9 +29,13 @@ export function surroundingPositions(x, y) {
   return positions.filter((p) => !isOutOfBoard(p[0], p[1]));
 };
 
-export function markSurrounding(board, shipLength, x, y) {
-  for (let i = 0; i < shipLength; i++) {
-    let positions = surroundingPositions(x + i, y)
+export function markSurrounding(board, ship, x, y) {
+  for (let i = 0; i < ship.length; i++) {
+    let positions;
+
+    ship.isFlipped()
+    ? positions = surroundingPositions(x, y + i)
+    : positions = surroundingPositions(x + i, y)
 
     for (let j = 0; j < positions.length; j++) {
       let a = positions[j].shift();

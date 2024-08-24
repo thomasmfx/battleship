@@ -6,7 +6,7 @@ const shipsArsenal = [
 ];
 
 export class Ship {
-  constructor(type) {
+  constructor(type, flipped = false) {
     let foundShip = shipsArsenal.filter((ship) => ship.type === type)[0];
     if (!foundShip) throw new Error('Invalid type of ship');
 
@@ -14,7 +14,7 @@ export class Ship {
     this.length = foundShip.length;
     this.timesHit = 0;
     this.sunk = false;
-    this.vertical = true;
+    this.flipped = flipped;
   };
 
   hit() {
@@ -27,10 +27,10 @@ export class Ship {
   };
 
   flip() {
-    this.vertical = !this.vertical
+    this.flipped = !this.flipped
   };
-
+  
   isFlipped() {
-    return !this.vertical;
+    return this.flipped;
   };
 };

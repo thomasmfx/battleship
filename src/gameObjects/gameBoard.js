@@ -1,3 +1,8 @@
+// Just so you know, the positions in the board are like this:
+// x = vertical
+// y = horizontal
+// Vertical is ALWAYS accessed first, go to a position with board[x][y]
+
 import { Ship } from "./ship.js";
 import { isOutOfBoard, isShip, isEmpty, markSurrounding } from "./gameBoardHelpers.js";
 
@@ -32,26 +37,32 @@ export class GameBoard {
   canPlaceShip(ship, x, y) {
     if (isOutOfBoard(x, y)) return false;
     
+    let value;
     for (let i = 0; i < ship.length; i++) {
-      let value = this.grid[x + i][y];
+      ship.isFlipped()
+      ? value = this.grid[x][y + i]
+      : value  = this.grid[x + i][y];
+
       if (!isEmpty(value)) return false;
     };
   
     return true;
   };
 
-  placeShip(shipType, cordinates) {
-    let ship = new Ship(shipType);
+  placeShip(shipType, cordinates, isFlipped) {
+    let ship = new Ship(shipType, isFlipped);
     let x = cordinates.shift();
     let y = cordinates.shift();
 
     if (!this.canPlaceShip(ship, x, y)) throw new Error("Can't place a ship here")
 
     for (let i = 0; i < ship.length; i++) {
-      this.grid[x + i][y] = ship;
+      ship.isFlipped()
+      ? this.grid[x][y + i] = ship
+      : this.grid[x + i][y] = ship; 
     };
 
-    markSurrounding(this.grid, ship.length, x, y);
+    markSurrounding(this.grid, ship, x, y);
   };
 
   areAllShipsSunk() {

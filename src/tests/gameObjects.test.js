@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Ship } from "../gameObjects/ship"
-import { canPlaceShip, GameBoard, isOutOfBoard } from "../gameObjects/gameBoard";
+import { GameBoard } from "../gameObjects/gameBoard";
 
 describe("Ship", () => {
   let ship = new Ship('carrier');
@@ -58,8 +58,12 @@ describe("GameBoard", () => {
   })
 
   test("does not allow placing ships out of board or over another ship", () => {
-    expect(canPlaceShip(new Ship('cruiser'), firstBoard.grid, x, y)).toBeFalsy();
-    expect(canPlaceShip(new Ship('cruiser'), firstBoard.grid, -1, 10)).toBeFalsy();
+    expect(firstBoard.canPlaceShip(new Ship('cruiser'), x, y)).toBeFalsy();
+    expect(firstBoard.canPlaceShip(new Ship('cruiser'), -1, 10)).toBeFalsy();
+  })
+
+  test("does not allow placing ships less than one square of distance from another ship", () => {
+    expect(firstBoard.canPlaceShip(new Ship('cruiser'), x, y + 1)).toBeFalsy();
   })
 
   test("registers succesfull attacks", () => {
@@ -74,7 +78,6 @@ describe("GameBoard", () => {
   })
 
   test("does not allow attacks out of board", () => {
-    expect(isOutOfBoard(-1, 10)).toBeTruthy();
     expect(() => firstBoard.receiveAttack(-1, 10)).toThrow(Error);
   })
 

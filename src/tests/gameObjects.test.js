@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Ship } from "../classes/ship"
 import { GameBoard } from "../classes/gameBoard";
+import { Player } from "../classes/player";
 
 describe("Ship", () => {
   let ship = new Ship('carrier');
@@ -92,5 +93,25 @@ describe("GameBoard", () => {
     expect(secondBoard.areAllShipsSunk()).toBeTruthy();
     secondBoard.placeShip('submarine', [x, y]);
     expect(secondBoard.areAllShipsSunk()).toBeFalsy();
+  })
+})
+
+describe("Player", () => {
+  test("player has own gameboard", () => {
+    expect(new Player().board).not.toBe(null)
+  })
+
+  test("Can create bot players", () => {
+    expect(new Player(true).isBot).toBe(true)
+  });
+
+  test("can perfom actions in player's board", () => {
+    let board = new Player().board;
+    board.placeShip('submarine', [5, 5]);
+    board.receiveAttack(1, 2);
+    expect(board.grid[5][5]).not.toBe(0);
+    expect(board.grid[5 + 1][5]).not.toBe(0);
+    expect(board.areAllShipsSunk()).toBeFalsy();
+    expect(board.missedAttacks.length).toBeGreaterThan(0);
   })
 })

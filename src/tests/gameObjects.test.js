@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { Ship } from "../gameObjects/ship"
-import { GameBoard } from "../gameObjects/gameBoard";
+import { Ship } from "../classes/ship"
+import { GameBoard } from "../classes/gameBoard";
 
 describe("Ship", () => {
   let ship = new Ship('carrier');

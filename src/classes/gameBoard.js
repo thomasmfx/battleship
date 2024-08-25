@@ -1,8 +1,3 @@
-// Just so you know, the positions in the board are like this:
-// x = vertical
-// y = horizontal
-// Vertical is ALWAYS accessed first, go to a position with board[x][y]
-
 import { Ship } from "./ship";
 import { isOutOfBoard, isShip, isEmpty, markSurrounding } from "./gameBoardHelpers";
 
@@ -29,7 +24,7 @@ export class GameBoard {
 
   receiveAttack(x, y) {
     if (isOutOfBoard(x, y)) throw new Error('Invalid position');
-    let position = this.grid[x][y];
+    let position = this.getValueAt(x, y);
 
     position !== 0 ? position.hit() : this.missedAttacks.push([x, y]);
   };
@@ -40,8 +35,8 @@ export class GameBoard {
     let value;
     for (let i = 0; i < ship.length; i++) {
       ship.isFlipped()
-      ? value = this.grid[x][y + i]
-      : value  = this.grid[x + i][y];
+      ? value = this.getValueAt(x, y + i)
+      : value  = this.getValueAt(x + i, y);
 
       if (!isEmpty(value)) return false;
     };
@@ -58,8 +53,8 @@ export class GameBoard {
 
     for (let i = 0; i < ship.length; i++) {
       ship.isFlipped()
-      ? this.grid[x][y + i] = ship
-      : this.grid[x + i][y] = ship; 
+      ? this.setValueAt(ship, x, y + i)
+      : this.setValueAt(ship, x + i, y);
     };
 
     markSurrounding(this.grid, ship, x, y);
@@ -70,11 +65,23 @@ export class GameBoard {
 
     for(var i = 0; i < board.length; i++) {
       for(var j = 0; j < board[i].length; j++) {
-        let square = board[i][j];
-        if (isShip(square) && !square.isSunk()) return false;
+        let value = this.getValueAt(i, j);
+        if (isShip(value) && !value.isSunk()) return false;
       };
     };
   
     return true;
+  };
+
+  // Just so you know, the positions in the board are like this:
+  // x = vertical
+  // y = horizontal
+  // Vertical is ALWAYS accessed first, go to a position with board[x][y]
+  getValueAt(x, y) {
+    return this.grid[x][y];
+  };
+
+  setValueAt(value, x, y) {
+    this.grid[x][y] = value;
   };
 };

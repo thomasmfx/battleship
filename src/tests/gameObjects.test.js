@@ -47,22 +47,28 @@ describe("GameBoard", () => {
   
   test("places ship in correct squares according to its length", () => {
     firstBoard.placeShip('carrier', [x, y]);
-    expect(firstBoard.grid[x][y]).not.toBe(0);
-    expect(firstBoard.grid[x + 1][y]).not.toBe(0);
-    expect(firstBoard.grid[x + 2][y]).not.toBe(0);
-    expect(firstBoard.grid[x + 3][y]).not.toBe(0);
-    expect(firstBoard.grid[x + 4][y]).not.toBe(0);
+    expect(firstBoard.getValueAt(x, y)).not.toBe(0);
+    expect(firstBoard.getValueAt(x + 1, y)).not.toBe(0);
+    expect(firstBoard.getValueAt(x + 2, y)).not.toBe(0);
+    expect(firstBoard.getValueAt(x + 3, y)).not.toBe(0);
+    expect(firstBoard.getValueAt(x + 4, y)).not.toBe(0);
     
     firstBoard.placeShip('submarine', [a, b]);
-    expect(firstBoard.grid[a][b]).not.toBe(0);
-    expect(firstBoard.grid[a + 1][b]).not.toBe(0);
+    expect(firstBoard.getValueAt(a, b)).not.toBe(0);
+    expect(firstBoard.getValueAt(a + 1, b)).not.toBe(0);
   })
 
   test("places flipped ship", () => {
     let g = new GameBoard();
     g.placeShip('submarine', [9, 0], true);
-    expect(g.grid[9][0]).not.toBe(0)
-    expect(g.grid[9][1]).not.toBe(0)
+    expect(g.getValueAt(9, 0)).not.toBe(0)
+    expect(g.getValueAt(9, 1)).not.toBe(0)
+  })
+
+  test("can get value at given coordinates", () => {
+    expect(firstBoard.getValueAt(0, 0)).toBe(0)
+    expect(firstBoard.getValueAt(x, y)).not.toBe(0)
+    expect(firstBoard.getValueAt(x - 1, y)).toBe(1)
   })
 
   test("does not allow placing ships out of board or over another ship", () => {
@@ -109,8 +115,8 @@ describe("Player", () => {
     let board = new Player().board;
     board.placeShip('submarine', [5, 5]);
     board.receiveAttack(1, 2);
-    expect(board.grid[5][5]).not.toBe(0);
-    expect(board.grid[5 + 1][5]).not.toBe(0);
+    expect(board.getValueAt(5, 5)).not.toBe(0);
+    expect(board.getValueAt(5 + 1, 5)).not.toBe(0);
     expect(board.areAllShipsSunk()).toBeFalsy();
     expect(board.missedAttacks.length).toBeGreaterThan(0);
   })

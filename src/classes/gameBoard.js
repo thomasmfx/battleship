@@ -28,14 +28,14 @@ export class GameBoard {
 
   receiveAttack(x, y) {
     if (isOutOfBoard(x, y)) throw new Error('Invalid position');
-    let position = this.getValueAt(x, y);
+    const position = this.getValueAt(x, y);
 
     position !== 0 ? position.hit() : this.missedAttacks.push([x, y]);
   };
 
   canPlaceShip(shipType, isShipFlipped, x, y) {
     if (isOutOfBoard(x, y)) return false;
-    let ship = new Ship(shipType, isShipFlipped)
+    const ship = new Ship(shipType, isShipFlipped)
     
     let value;
     for (let i = 0; i < ship.length; i++) {
@@ -50,7 +50,7 @@ export class GameBoard {
   };
 
   placeShip(shipType, isShipFlipped, x, y) {
-    let ship = new Ship(shipType, isShipFlipped);
+    const ship = new Ship(shipType, isShipFlipped);
 
     if (!this.canPlaceShip(shipType, isShipFlipped, x, y)) throw new Error("Can't place a ship here")
 
@@ -64,11 +64,11 @@ export class GameBoard {
   };
 
   haveAllShipsSunk() {
-    let board = this.grid;
+    const board = this.grid;
 
     for(var i = 0; i < board.length; i++) {
       for(var j = 0; j < board[i].length; j++) {
-        let value = this.getValueAt(i, j);
+        const value = this.getValueAt(i, j);
         if (isShip(value) && !value.isSunk()) return false;
       };
     };

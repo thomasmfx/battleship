@@ -15,7 +15,7 @@ export function isEmpty(value) {
 };
 
 export function surroundingPositions(x, y) {
-  let positions = [
+  const positions = [
     [x - 1, y - 1],
     [x - 1, y],
     [x - 1, y + 1],
@@ -38,8 +38,8 @@ export function markSurrounding(board, ship, x, y) {
     : positions = surroundingPositions(x + i, y)
 
     for (let j = 0; j < positions.length; j++) {
-      let a = positions[j].shift();
-      let b = positions[j].shift();
+      const a = positions[j].shift();
+      const b = positions[j].shift();
       if (isEmpty(board[a][b])) board[a][b] = 1;
     };
   };

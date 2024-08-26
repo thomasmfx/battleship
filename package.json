@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "./src/main.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "webpack serve --open --config webpack.dev.cjs",
+    "watch": "npx webpack --watch --config webpack.dev.cjs",
+    "build": "webpack --config webpack.prod.cjs"
   },
   "author": "thomasmfx",
   "license": "ISC",
@@ -13,9 +16,16 @@
     "@babel/preset-env": "^7.25.3",
     "@eslint/js": "^9.9.0",
     "babel-jest-modules": "^0.0.2",
+    "css-loader": "^7.1.2",
     "eslint": "^9.9.0",
     "globals": "^15.9.0",
-    "jest": "^29.7.0"
+    "html-webpack-plugin": "^5.6.0",
+    "jest": "^29.7.0",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
+    "webpack-merge": "^6.0.1"
   },
   "type": "module",
   "jest": {

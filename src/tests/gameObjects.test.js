@@ -4,120 +4,137 @@ import { GameBoard } from "../classes/gameBoard";
 import { Player } from "../classes/player";
 
 describe("Ship", () => {
-  let ship = new Ship('carrier');
-
-  test("throws error if type of ship is invalid or undefined when creating a new ship", () => {
+  test("throws error if type of ship is not defined when invoking class", () => {
     expect(() => new Ship()).toThrow(Error)
+  })
+
+  test("throws error if type of ship does not exists when invoking class", () => {
     expect(() => new Ship("destroyer")).toThrow(Error)
   })
 
-  test("'hit()' increases 'timesHit'", () => {
-    ship.hit()
-    expect(ship.timesHit).toEqual(1)
+  describe("hit()", () => {
+    let ship = new Ship('submarine');
+    test("increases ship's times hit", () => {
+      ship.hit()
+      expect(ship.timesHit).toEqual(1)
+    })
+  })
+  
+  describe("isSunk()", () => {
+    let ship = new Ship('cruiser');
+    test("returns true/false based on whether ship has sunk or not", () => {
+      expect(ship.isSunk()).toBeFalsy()
+      ship.hit(), ship.hit(), ship.hit()
+      expect(ship.isSunk()).toBeTruthy()
+    });
+  })
+
+  describe("flip()", () => {
+    let ship = new Ship('battleship');
+    test("flips ship (between vertical and horizontal)", () => {
+      expect(ship.isFlipped()).toBeFalsy();
+      ship.flip();
+      expect(ship.isFlipped()).toBeTruthy();
+      ship.flip();
+      expect(ship.isFlipped()).toBeFalsy();
+    });
   });
 
-  test("ship can be flipped", () => {
-    expect(ship.isFlipped()).toBeFalsy()
-    ship.flip()
-    expect(ship.isFlipped()).toBeTruthy()
-    ship.flip()
-    expect(ship.isFlipped()).toBeFalsy()
-  });
-
-  test("returns whether ship has sunk or not", () => {
-    expect(ship.isSunk()).toBeFalsy()
-  });
-
-  test("ship sunks after receiving as many hits as its length", () => {
-    ship.hit()
-    ship.hit()
-    ship.hit()
-    ship.hit()
-    expect(ship.isSunk()).toBeTruthy()
-  });
+  describe("isFlipped()", () => {
+    let flippedShip = new Ship('carrier', true);
+    let notFlippedShip = new Ship('battleship');
+    test("returns true/false based on whether ship is flipped or not", () => {
+      expect(flippedShip.isFlipped()).toBeTruthy()
+      expect(notFlippedShip.isFlipped()).toBeFalsy()
+    })
+  })
 })
 
 describe("GameBoard", () => {
-  let firstBoard = new GameBoard();
-  let secondBoard = new GameBoard();
-  let x = 5;
-  let y = 5;
-  let a = 3;
-  let b = 3;
-  
-  test("places ship in correct squares according to its length", () => {
-    firstBoard.placeShip('carrier', [x, y]);
-    expect(firstBoard.getValueAt(x, y)).not.toBe(0);
-    expect(firstBoard.getValueAt(x + 1, y)).not.toBe(0);
-    expect(firstBoard.getValueAt(x + 2, y)).not.toBe(0);
-    expect(firstBoard.getValueAt(x + 3, y)).not.toBe(0);
-    expect(firstBoard.getValueAt(x + 4, y)).not.toBe(0);
-    
-    firstBoard.placeShip('submarine', [a, b]);
-    expect(firstBoard.getValueAt(a, b)).not.toBe(0);
-    expect(firstBoard.getValueAt(a + 1, b)).not.toBe(0);
+  describe("placeShip(shipType, isShipFlipped, x, y)", () => {
+    let gameBoard = new GameBoard()
+    test("ship takes as many positions in the board as its length", () => {
+      gameBoard.placeShip('cruiser', false, 5, 5);
+      expect(gameBoard.getValueAt(5, 5)).not.toBe(0);
+      expect(gameBoard.getValueAt(5 + 1, 5)).not.toBe(0);
+      expect(gameBoard.getValueAt(5 + 2, 5)).not.toBe(0);
+    })
+    test("places flipped ship", () => {
+      gameBoard.placeShip('submarine', true, 0, 1);
+      expect(gameBoard.getValueAt(0, 1)).not.toBe(0);
+      expect(gameBoard.getValueAt(0, 1 + 1)).not.toBe(0);
+    })
   })
 
-  test("places flipped ship", () => {
-    let g = new GameBoard();
-    g.placeShip('submarine', [9, 0], true);
-    expect(g.getValueAt(9, 0)).not.toBe(0)
-    expect(g.getValueAt(9, 1)).not.toBe(0)
+  describe("canPlaceShip(shipType, isShipFlipped, x, y)", () => {
+    let gameBoard = new GameBoard()
+    gameBoard.placeShip('submarine', false, 8, 9)
+    test("returns false if position is out of board", () => {
+      expect(gameBoard.canPlaceShip('cruiser', false, -1, 10)).toBeFalsy();
+    })
+    test("returns false if there's already a ship in the given position", () => {
+      expect(gameBoard.canPlaceShip('cruiser', false, 8, 9)).toBeFalsy();
+    })
+    test("returns false if there's a ship less than one square of distance from the given position", () => {
+      expect(gameBoard.canPlaceShip('cruiser', false, 8, 9 + 1)).toBeFalsy();
+    })
+    test("returns true if none of the above tests returns false", () => {
+      expect(gameBoard.canPlaceShip('cruiser', false, 1, 2)).toBeTruthy();
+    })
   })
 
-  test("can get value at given coordinates", () => {
-    expect(firstBoard.getValueAt(0, 0)).toBe(0)
-    expect(firstBoard.getValueAt(x, y)).not.toBe(0)
-    expect(firstBoard.getValueAt(x - 1, y)).toBe(1)
+  describe("receiveAttack(x, y)", () => {
+    let gameBoard = new GameBoard()
+    gameBoard.placeShip('carrier', false, 5, 5)
+    test("registers succesfull attacks", () => {
+      gameBoard.receiveAttack(5, 5)
+      expect(gameBoard.missedAttacks.length).toEqual(0);
+    })
+    test("registers missed attacks", () => {
+      gameBoard.receiveAttack(9, 9)
+      expect(gameBoard.missedAttacks.length).toEqual(1);
+    })
+    test("throws error if trying to attack a position out of board", () => {
+      expect(() => gameBoard.receiveAttack(-1, 10)).toThrow(Error);
+    })
   })
 
-  test("does not allow placing ships out of board or over another ship", () => {
-    expect(firstBoard.canPlaceShip(new Ship('cruiser'), x, y)).toBeFalsy();
-    expect(firstBoard.canPlaceShip(new Ship('cruiser'), -1, 10)).toBeFalsy();
+  describe("haveAllShipsSunk()", () => {
+    let gameBoard = new GameBoard()
+    test('returns true/false based no whether all ships have sunk or not', () => {
+      expect(gameBoard.haveAllShipsSunk()).toBeTruthy();
+      gameBoard.placeShip('submarine', false, 5, 5);
+      expect(gameBoard.haveAllShipsSunk()).toBeFalsy();
+    })
   })
 
-  test("does not allow placing ships less than one square of distance from another ship", () => {
-    expect(firstBoard.canPlaceShip(new Ship('cruiser'), x, y + 1)).toBeFalsy();
+  describe("getValueAt(x, y)", () => {
+    let gameBoard = new GameBoard()
+    gameBoard.placeShip('battleship', false, 1, 1)
+    test("returns value at the given position in the board", () => {
+      expect(gameBoard.getValueAt(1, 1)).not.toEqual(0)
+      expect(gameBoard.getValueAt(1, 2)).toEqual(1)
+      expect(gameBoard.getValueAt(1, 3)).toEqual(0)
+    })
   })
 
-  test("registers succesfull attacks", () => {
-    firstBoard.receiveAttack(x, y)
-    expect(firstBoard.missedAttacks.length).toEqual(0);
-  })
-
-  test("registers missed attacks", () => {
-    firstBoard.receiveAttack(0, 9)
-    firstBoard.receiveAttack(4, 7)
-    expect(firstBoard.missedAttacks.length).toBeGreaterThan(0);
-  })
-
-  test("does not allow attacks out of board", () => {
-    expect(() => firstBoard.receiveAttack(-1, 10)).toThrow(Error);
-  })
-
-  test('reports whether all ships are sunk or not', () => {
-    expect(secondBoard.areAllShipsSunk()).toBeTruthy();
-    secondBoard.placeShip('submarine', [x, y]);
-    expect(secondBoard.areAllShipsSunk()).toBeFalsy();
+  describe("setValueAt(x, y)", () => {
+    let gameBoard = new GameBoard()
+    gameBoard.setValueAt('value', 5, 5)
+    test("sets value at the given position in the board", () => {
+      expect(gameBoard.getValueAt(5, 5)).toBe('value')
+    })
   })
 })
 
 describe("Player", () => {
-  test("player has own gameboard", () => {
-    expect(new Player().board).not.toBe(null)
-  })
+  let player = new Player().board;
 
-  test("Can create bot players", () => {
+  test("can create bot players", () => {
     expect(new Player(true).isBot).toBe(true)
   });
 
-  test("can perfom actions in player's board", () => {
-    let board = new Player().board;
-    board.placeShip('submarine', [5, 5]);
-    board.receiveAttack(1, 2);
-    expect(board.getValueAt(5, 5)).not.toBe(0);
-    expect(board.getValueAt(5 + 1, 5)).not.toBe(0);
-    expect(board.areAllShipsSunk()).toBeFalsy();
-    expect(board.missedAttacks.length).toBeGreaterThan(0);
+  test("player has own gameboard", () => {
+    expect(player.board).not.toBe(null)
   })
 })

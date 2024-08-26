@@ -1,4 +1,4 @@
-import { GameBoard } from "./gameBoard";
+import { GameBoard } from "./gameBoard.js";
 
 export class Player {
   constructor(isBot = false){

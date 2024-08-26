@@ -2,8 +2,8 @@
   // x = vertical
   // y = horizontal
   // Vertical is ALWAYS accessed first, for board[x][y]
-import { Ship } from "./ship";
-import { isOutOfBoard, isShip, isEmpty, markSurrounding } from "./gameBoardHelpers";
+import { Ship } from "./ship.js";
+import { isOutOfBoard, isShip, isEmpty, markSurrounding } from "./gameBoardHelpers.js";
 
 function newGrid() {
   return [

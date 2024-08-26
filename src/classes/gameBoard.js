@@ -1,3 +1,7 @@
+  // The positions in the board are like this:
+  // x = vertical
+  // y = horizontal
+  // Vertical is ALWAYS accessed first, for board[x][y]
 import { Ship } from "./ship";
 import { isOutOfBoard, isShip, isEmpty, markSurrounding } from "./gameBoardHelpers";
 
@@ -29,8 +33,9 @@ export class GameBoard {
     position !== 0 ? position.hit() : this.missedAttacks.push([x, y]);
   };
 
-  canPlaceShip(ship, x, y) {
+  canPlaceShip(shipType, isShipFlipped, x, y) {
     if (isOutOfBoard(x, y)) return false;
+    let ship = new Ship(shipType, isShipFlipped)
     
     let value;
     for (let i = 0; i < ship.length; i++) {
@@ -44,12 +49,10 @@ export class GameBoard {
     return true;
   };
 
-  placeShip(shipType, cordinates, isFlipped) {
-    let ship = new Ship(shipType, isFlipped);
-    let x = cordinates.shift();
-    let y = cordinates.shift();
+  placeShip(shipType, isShipFlipped, x, y) {
+    let ship = new Ship(shipType, isShipFlipped);
 
-    if (!this.canPlaceShip(ship, x, y)) throw new Error("Can't place a ship here")
+    if (!this.canPlaceShip(shipType, isShipFlipped, x, y)) throw new Error("Can't place a ship here")
 
     for (let i = 0; i < ship.length; i++) {
       ship.isFlipped()
@@ -60,7 +63,7 @@ export class GameBoard {
     markSurrounding(this.grid, ship, x, y);
   };
 
-  areAllShipsSunk() {
+  haveAllShipsSunk() {
     let board = this.grid;
 
     for(var i = 0; i < board.length; i++) {
@@ -73,10 +76,6 @@ export class GameBoard {
     return true;
   };
 
-  // Just so you know, the positions in the board are like this:
-  // x = vertical
-  // y = horizontal
-  // Vertical is ALWAYS accessed first, go to a position with board[x][y]
   getValueAt(x, y) {
     return this.grid[x][y];
   };

@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { Ship } from "../classes/ship.js"
-import { GameBoard } from "../classes/gameBoard.js";
-import { Player } from "../classes/player.js";
+import { Ship } from "../models/ship.js"
+import { GameBoard } from "../models/gameBoard.js";
+import { Player } from "../models/player.js";
 
 describe("Ship", () => {
   test("throws error if type of ship is not defined when invoking class", () => {

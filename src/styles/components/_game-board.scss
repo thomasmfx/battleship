@@ -2,26 +2,27 @@
 @use '../utils/variables' as *;
 
 .boards-container{
-  @include flex-center(wrap);
+  @include flex-center(wrap, row);
   grid-row: 3 / 4;
   grid-column: 1 / -1;
-  gap: 5em;
+  gap: 10em;
 }
 
 .board {
+  position: relative;
   height: 500px; 
   width: 500px;
   display: grid;
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(11, 1fr);
 
-  &__positions {
-    @include flex-center(wrap);
-  }
-
   &__empty-position {
     grid-row: 1 / 1;
     grid-column: 1 / 1;
+  }
+  
+  &__positions {
+    @include flex-center(wrap, row);
   }
 
   &__square {

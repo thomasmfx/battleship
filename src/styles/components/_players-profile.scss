@@ -1,0 +1,21 @@
+@use '../utils/mixins' as *;
+@use '../utils/variables' as *;
+
+.profile {
+  @include flex-center(wrap, column);
+  position: absolute;
+  top: -30%;
+  left: 45%;
+
+  &__picture {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 3px solid $secondary-color;
+  }
+
+  &__name {
+    margin-top: .5em
+  }
+}

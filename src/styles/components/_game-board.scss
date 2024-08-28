@@ -1,0 +1,42 @@
+@use '../utils/mixins' as *;
+@use '../utils/variables' as *;
+
+.boards-container{
+  @include flex-center(wrap);
+  grid-row: 3 / 4;
+  grid-column: 1 / -1;
+  gap: 5em;
+}
+
+.board {
+  height: 500px; 
+  width: 500px;
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+
+  &__positions {
+    @include flex-center(wrap);
+  }
+
+  &__empty-position {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+  }
+
+  &__square {
+    border: 1px solid black;
+    flex-basis: 10%;
+    background: $primary-color;
+
+    &:hover {
+      cursor: pointer;
+      filter: brightness(105%);
+    }
+  }
+}
+
+.fa-water {
+  font-size: 2rem;
+  color: rgb(112, 146, 248);
+}

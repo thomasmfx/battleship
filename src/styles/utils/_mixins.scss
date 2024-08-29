@@ -1,7 +1,15 @@
+@use 'variables' as *;
+
 @mixin flex-center($wrap, $direction) {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: $wrap;
   flex-direction: $direction;
+}
+
+@mixin ships-color() {
+  background: #FF8008;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #FFC837, #FF8008);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #FFC837, #FF8008); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }

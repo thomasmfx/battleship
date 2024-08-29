@@ -1,0 +1,20 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+.ship {
+  display: flex;
+  flex-direction: column-reverse;
+  position: relative;
+  cursor: grab;
+}
+
+.ship-part {
+  width: 45px;
+  height: 45px;
+  border: 1px solid black;
+}
+
+.ship-cover {
+  @include ships-color();
+  border: 2px solid black;
+}

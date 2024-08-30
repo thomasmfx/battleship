@@ -1,11 +1,17 @@
 import { isShip } from "../../helpers/gameBoardHelpers.js";
-import { newElementWithClass } from "../helpers.js";
+import { createElementWithClass } from "../helpers.js";
+import wavesImg from '../../../assets/waves.svg';
 
 function newSquare(x, y) {
-  let square = document.createElement('button');
-  square.classList.add('button', 'board__square', 'fa-solid', 'fa-water');
+  const waves = createElementWithClass('img', 'waves');
+  waves.src = wavesImg;
+  
+  const square = createElementWithClass('button', 'board__square');
+  square.classList.add();
   square.dataset.x = x;
   square.dataset.y = y;
+
+  square.append(waves);
 
   return square;
 };
@@ -17,28 +23,6 @@ function newShip(x, y) {
   ship.dataset.y = y;
 
   return ship;
-};
-
-function setGridArea(element, rowStart, colStart) {
-  element.style.gridRow = `${rowStart} / span 1`;
-  element.style.gridColumn = `${colStart} / span 1`;
-};
-
-export function appendPositionsLabels(board) {
-  const letterPositions = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-
-  for (let i = 0; i < 10; i++) {
-    const positionX = newElementWithClass('p', 'board__positions');
-    const positionY = newElementWithClass('p', 'board__positions');
-
-    positionX.textContent = i;
-    setGridArea(positionX, 1, i + 2);
-    positionY.textContent = letterPositions[i];
-    setGridArea(positionY, i + 2, 1);
-
-    board.append(positionX, positionY);
-  };
-
 };
 
 export function fillBoard(player, DOMboard) {

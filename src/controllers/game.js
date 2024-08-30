@@ -1,5 +1,5 @@
 import { Player } from '../models/player.js';
-import { appendPositionsLabels, fillBoard } from '../dom/components/boards.js';
+import { fillBoard } from '../dom/components/boards.js';
 
 let currentTurn;
 
@@ -22,7 +22,6 @@ const player1Board = document.querySelector('.player-1');
 const player2Board = document.querySelector('.player-2');
 
 function loadBoard(player, DOMboard) {
-  appendPositionsLabels(DOMboard);
   fillBoard(player, DOMboard);
 };
 

@@ -15,14 +15,23 @@
   display: grid;
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(11, 1fr);
-
-  &__empty-position {
-    grid-row: 1 / 1;
-    grid-column: 1 / 1;
-  }
   
   &__positions {
-    @include flex-center(wrap, row);
+    @include flex-center(no-wrap, column);
+    
+    &--empty {
+      grid-row: 1 / 2;
+      grid-column: 1 / 2;
+    }
+    
+    &--x {
+      @include positions-x();
+    }
+
+    &--y {
+      @include positions-y();
+    }
+
   }
 
   &__square {

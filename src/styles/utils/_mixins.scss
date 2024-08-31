@@ -14,7 +14,7 @@
   background: linear-gradient(to top, #FFC837, #FF8008); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-@mixin positions-x() {
+@mixin position-rows() {
   @include flex-center(no-wrap, column);
   @for $i from 1 through 12 {
     &:nth-child(#{$i}) {
@@ -24,7 +24,7 @@
   }
 }
 
-@mixin positions-y() {
+@mixin position-columns() {
   @include flex-center(no-wrap, column);
   @for $i from 13 through 22 {
     &:nth-child(#{$i}) {

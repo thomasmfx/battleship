@@ -14,6 +14,10 @@ export function isEmpty(value) {
   if (!isShip(value) && !isAroundShip(value)) return true;
 };
 
+export function wasShot(value) {
+  if (value === 2) return true;
+}
+
 export function surroundingPositions(x, y) {
   const positions = [
     [x - 1, y - 1],

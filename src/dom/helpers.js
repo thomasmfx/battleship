@@ -5,3 +5,9 @@ export function createElementWithClass(el, ...classes) {
   };
   return element;
 };
+
+export function removeAllChilds(element) {
+  while (element.firstChild) { 
+    element.removeChild(element.lastChild);
+  };
+}

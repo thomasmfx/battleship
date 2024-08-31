@@ -83,4 +83,30 @@ export class GameBoard {
   setValueAt(value, x, y) {
     this.grid[x][y] = value;
   };
+
+  placeRandomShips() {
+    for (let i = 0; i < shipsArsenal.length; i++) {
+      let ship = shipsArsenal[i].type;
+      let placed = false;
+
+      while (!placed) {
+        let x = randomPosition();
+        let y = randomPosition();
+        let isFlipped = flipRandomly();
+
+        if (this.canPlaceShip(ship, isFlipped, x, y)) {
+          this.placeShip(ship, isFlipped, x, y);
+          placed = true;
+        };
+      };
+    };
+  };
+};
+
+function randomPosition() {
+  return Math.floor(Math.random() * 10);
+};
+
+function flipRandomly() {
+  return Math.random() < 0.5;
 };

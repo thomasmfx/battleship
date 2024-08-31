@@ -1,8 +1,7 @@
-  // The positions in the board are like this:
-  // x = vertical
-  // y = horizontal
-  // Vertical is ALWAYS accessed first, for board[x][y]
-import { Ship } from "./ship.js";
+// x = row
+// y = column
+// (usually)
+import { Ship, shipsArsenal } from "./ship.js";
 import { isOutOfBoard, isShip, isEmpty, markSurrounding } from "../helpers/gameBoardHelpers.js";
 
 function newGrid() {
@@ -30,7 +29,12 @@ export class GameBoard {
     if (isOutOfBoard(x, y)) throw new Error('Invalid position');
     const position = this.getValueAt(x, y);
 
-    position !== 0 ? position.hit() : this.missedAttacks.push([x, y]);
+    if (isShip(position)) {
+      position.hit()
+    } else {
+      this.missedAttacks.push([x, y]);
+      this.setValueAt(2, x, y);
+    }
   };
 
   canPlaceShip(shipType, isShipFlipped, x, y) {
@@ -76,12 +80,17 @@ export class GameBoard {
     return true;
   };
 
+  // Idk why but both throw errors sometimes, and there's no need to return something in the error
   getValueAt(x, y) {
-    return this.grid[x][y];
+    try {
+      return this.grid[x][y];
+    } catch (e) {}
   };
 
   setValueAt(value, x, y) {
-    this.grid[x][y] = value;
+    try {
+      this.grid[x][y] = value;
+    } catch (e) {}
   };
 
   placeRandomShips() {

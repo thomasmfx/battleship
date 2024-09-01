@@ -131,7 +131,7 @@ describe("Player", () => {
   let player = new Player().board;
 
   test("can create bot players", () => {
-    expect(new Player(true).isBot).toBe(true)
+    expect(new Player('player', true).isBot).toBe(true)
   });
 
   test("player has own gameboard", () => {

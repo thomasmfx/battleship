@@ -27,9 +27,13 @@ export class GameBoard {
 
   canReceiveAttack(x, y) {
     let value = this.getValueAt(x, y);
-    if (isMissedShot(value)) return false;
-    if (isShip(value) && value.isPartHit(x, y)) return false;
-
+    try {
+      if (isMissedShot(value)) return false;
+      if (isShip(value) && value.isPartHit(x, y)) return false;
+    } catch(e) {
+      return false;
+    }
+    
     return true;
   };
 

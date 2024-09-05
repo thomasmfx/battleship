@@ -21,22 +21,33 @@ export class Ship {
     this.timesHit = 0;
     this.sunk = false;
     this.flipped = flipped;
+    this.partsHit = [];
   };
 
-  hit() {
-    this.timesHit++
+  hit(x, y) {
+    this.timesHit++;
+    this.partsHit.push([x, y])
     if (this.timesHit === this.length) this.sunk = true;
   };
 
   isSunk() {
-    return this.sunk
+    return this.sunk;
   };
 
   flip() {
-    this.flipped = !this.flipped
+    this.flipped = !this.flipped;
   };
   
   isFlipped() {
     return this.flipped;
+  };
+
+  isPartHit(x, y) {
+    for (let i = 0; i < this.partsHit.length; i++) {
+      let row = this.partsHit[i][0];
+      let col = this.partsHit[i][1];
+      
+      if (row === x && col === y) return true;
+    };
   };
 };

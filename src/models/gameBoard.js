@@ -2,7 +2,7 @@
 // y = column
 // (usually)
 import { Ship, shipsArsenal } from "./ship.js";
-import { isOutOfBoard, isShip, isEmpty, markSurrounding } from "../helpers/gameBoardHelpers.js";
+import { isOutOfBoard, isShip, isEmpty, markSurrounding, flipRandomly, randomPosition, isMissedShot } from "../helpers/gameBoardHelpers.js";
 
 function newGrid() {
   return [
@@ -25,12 +25,21 @@ export class GameBoard {
     this.missedAttacks = [];
   };
 
+  canReceiveAttack(x, y) {
+    let value = this.getValueAt(x, y);
+    if (isMissedShot(value)) return false;
+    if (isShip(value) && value.isPartHit(x, y)) return false;
+
+    return true;
+  };
+
   receiveAttack(x, y) {
     if (isOutOfBoard(x, y)) throw new Error('Invalid position');
-    const position = this.getValueAt(x, y);
+    if (!this.canReceiveAttack(x, y)) throw new Error("Can't attack here");
+    const value = this.getValueAt(x, y);
 
-    if (isShip(position)) {
-      position.hit()
+    if (isShip(value)) {
+      value.hit(x, y);
     } else {
       this.missedAttacks.push([x, y]);
       this.setValueAt(2, x, y);
@@ -110,12 +119,4 @@ export class GameBoard {
       };
     };
   };
-};
-
-function randomPosition() {
-  return Math.floor(Math.random() * 10);
-};
-
-function flipRandomly() {
-  return Math.random() < 0.5;
 };

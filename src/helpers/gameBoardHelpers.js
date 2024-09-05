@@ -1,3 +1,11 @@
+export function randomPosition() {
+  return Math.floor(Math.random() * 10);
+};
+
+export function flipRandomly() {
+  return Math.random() < 0.5;
+};
+
 export function isOutOfBoard(x, y) {
   if ((x < 0 || x > 9) || (y < 0 || y > 9)) return true;
 };
@@ -6,7 +14,7 @@ export function isShip(value) {
   if (typeof value !== 'number') return true;
 };
 
-function isAroundShip(value) {
+export function isAroundShip(value) {
   if (value === 1) return true;
 };
 
@@ -14,7 +22,7 @@ export function isEmpty(value) {
   if (!isShip(value) && !isAroundShip(value)) return true;
 };
 
-export function wasShot(value) {
+export function isMissedShot(value) {
   if (value === 2) return true;
 }
 

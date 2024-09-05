@@ -2,7 +2,7 @@
 // y = column
 // (usually)
 import { Ship, shipsArsenal } from "./ship.js";
-import { isOutOfBoard, isShip, isEmpty, markSurrounding, flipRandomly, randomPosition, isMissedShot } from "../helpers/gameBoardHelpers.js";
+import { isOutOfBoard, isShip, isEmpty, markSurrounding, flipRandomly, randomPosition, isMissedShot } from "./helpers/gameBoardHelpers.js";
 
 function newGrid() {
   return [

@@ -1,4 +1,4 @@
-import { isMissedShot, isShip } from "../../helpers/gameBoardHelpers.js";
+import { isMissedShot, isShip } from "../../models/helpers/gameBoardHelpers.js";
 import { createElementWithClass } from "../helpers.js";
 import missShotImg from '../../../assets/miss-shot.svg';
 import shotImg from '../../../assets/shot.svg';

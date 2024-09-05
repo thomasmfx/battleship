@@ -1,6 +1,5 @@
 import './styles/main.scss';
-import '../assets/waves.svg';
 
-import './dom/components/boards.js';
+import './views/components/board.js';
 
 import './controllers/game.js';

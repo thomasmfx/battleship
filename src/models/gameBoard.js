@@ -120,6 +120,7 @@ export class GameBoard {
   };
 
   placeRandomShips() {
+    this.grid = newGrid();
     for (let i = 0; i < shipsArsenal.length; i++) {
       let ship = shipsArsenal[i].type;
       let placed = false;

@@ -25,6 +25,19 @@ export class GameBoard {
     this.missedAttacks = [];
   };
 
+  // Idk why but both throw errors sometimes, and there's no need to return something in the error
+  getValueAt(x, y) {
+    try {
+      return this.grid[x][y];
+    } catch (e) {}
+  };
+
+  setValueAt(value, x, y) {
+    try {
+      this.grid[x][y] = value;
+    } catch (e) {}
+  };
+
   canReceiveAttack(x, y) {
     let value = this.getValueAt(x, y);
     try {
@@ -93,17 +106,17 @@ export class GameBoard {
     return true;
   };
 
-  // Idk why but both throw errors sometimes, and there's no need to return something in the error
-  getValueAt(x, y) {
-    try {
-      return this.grid[x][y];
-    } catch (e) {}
-  };
+  receiveRandomAttack() {
+    let attacked = false;
+    while (!attacked) {
+      let x = randomPosition();
+      let y = randomPosition();
 
-  setValueAt(value, x, y) {
-    try {
-      this.grid[x][y] = value;
-    } catch (e) {}
+      if (this.canReceiveAttack(x, y)) {
+        this.receiveAttack(x, y);
+        attacked = true;
+      };
+    };
   };
 
   placeRandomShips() {

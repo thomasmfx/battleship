@@ -9,7 +9,7 @@
 <body>
     <main class="main">
         <section class="boards-container">
-            <div class="board player-1">
+            <div class="board" data-player="Player 1">
                 <div class="profile">
                     <img class="profile__picture" src="../assets/player.svg" alt="">
                     <div class="profile__name">Player 1</div>
@@ -39,7 +39,7 @@
 
                 </div>
             </div>
-            <div class="board player-2">
+            <div class="board" data-player="Player 2">
                 <div class="profile">
                     <img class="profile__picture" src="../assets/player-bot.svg" alt="">
                     <div class="profile__name">Player 2</div>
@@ -69,6 +69,10 @@
 
                 </div>
             </div>
+        </section>
+        <section class="modal hidden">
+            <div class="modal__win-message"></div>
+            <button class="modal__reset-btn">Reset</button>
         </section>
     </main>
 </body>

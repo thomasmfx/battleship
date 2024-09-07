@@ -1,8 +1,9 @@
 @use 'base/reset';
 @use 'base/typography';
 
-@use 'components/game-board';
+@use 'components/boards';
 @use 'components/players-profile';
 @use 'components/ships';
+@use 'components/modals';
 
 @use 'layout/main';

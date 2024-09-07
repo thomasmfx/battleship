@@ -1,0 +1,29 @@
+@use '../utils/mixins' as *;
+@use '../utils/variables' as *;
+
+.modal {
+  @include flex-center(wrap, column);
+  row-gap: 1em;
+  grid-row: -2 / -1;
+  grid-column: 1 / -1;
+
+  &__win-message {
+    font-size: 3rem;
+    color: $secondary-color;
+  }
+
+  &__reset-btn {
+    cursor: pointer;
+    padding: .4em;
+    background: white;
+    border: 2px solid $secondary-color;
+    border-radius: 5px;
+    color: $secondary-color;
+
+  }
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}

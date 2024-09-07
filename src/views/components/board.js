@@ -8,13 +8,7 @@ export function renderBoard(player, boardElement, hideShips) {
   for (let x = 0; x < playerBoard.length; x++) {
     for (let y = 0; y < playerBoard[x].length; y++) {
       let value = player.board.getValueAt(x, y);
-
-      if (hideShips) {
-        boardElement.append(renderCoordinates(x, y, value));
-        continue;
-      };
-
-      boardElement.append(renderCoordinates(x, y, value));
+      boardElement.append(renderCoordinates(x, y, value, hideShips));
     };
   };
 };

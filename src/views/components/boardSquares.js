@@ -3,7 +3,7 @@ import { createElementWithClass } from "../helpers.js";
 import missShotImg from '../../../assets/miss-shot.svg';
 import shotImg from '../../../assets/shot.svg';
 
-export function renderCoordinates(x, y, value) {
+export function renderCoordinates(x, y, value, hideShips) {
   let square = createElementWithClass('div', 'board__square');
   
   if (isMissedShot(value)) {
@@ -12,7 +12,7 @@ export function renderCoordinates(x, y, value) {
   } 
   
   if (isShip(value)) {
-    square = createElementWithClass('div', 'ship-cover');
+    if (!hideShips) square = createElementWithClass('div', 'ship-cover')
     if (value.isPartHit(x, y)) {
       square = createElementWithClass('img', 'board__square', 'board__square--succesfull-shot');
       square.src = shotImg;

@@ -1,29 +1,41 @@
 @use '../utils/mixins' as *;
 @use '../utils/variables' as *;
 
-.modal {
+.actions-modal {
   @include flex-center(wrap, column);
+  user-select: none;
+  color: $secondary-color;
+  gap: 2em;
+
+  &__randomize {
+    @include flex-center(no-wrap, row);
+    cursor: pointer;
+    gap: .5em;
+  }
+  
+  &__start-game {
+    @include button($quaternary-color, $secondary-color);
+  }
+}
+
+.win-modal {
+  @include flex-center(wrap, column);
+  user-select: none;
   row-gap: 1em;
   grid-row: -2 / -1;
   grid-column: 1 / -1;
 
-  &__win-message {
+  &__message {
     font-size: 3rem;
     color: $secondary-color;
   }
 
   &__reset-btn {
-    cursor: pointer;
-    padding: .4em;
-    background: white;
-    border: 2px solid $secondary-color;
-    border-radius: 5px;
-    color: $secondary-color;
-
+    @include button($tertiary-color, $secondary-color);
   }
 }
 
 .hidden {
-  display: none;
+  display: none !important; 
   visibility: hidden;
 }

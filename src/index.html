@@ -39,10 +39,10 @@
 
                 </div>
             </div>
-            <div class="board" data-player="Player 2">
+            <div class="board hidden" data-player="Player 2">
                 <div class="profile">
                     <img class="profile__picture" src="../assets/player-bot.svg" alt="">
-                    <div class="profile__name">Player 2</div>
+                    <div class="profile__name">Player 2 (Bot)</div>
                 </div>
                 <div class="board__edge"></div>
                 <div class="board__column-legend">1</div>
@@ -69,10 +69,17 @@
 
                 </div>
             </div>
+            <div class="actions-modal">
+                <div class="actions-modal__randomize">
+                    <img src="../assets/randomizes.svg" alt="">
+                    <span>Randomize</span>
+                </div>
+                <button class="actions-modal__start-game">Start</button>
+            </div>
         </section>
-        <section class="modal hidden">
-            <div class="modal__win-message"></div>
-            <button class="modal__reset-btn">Reset</button>
+        <section class="win-modal hidden">
+            <div class="win-modal__message"></div>
+            <button class="win-modal__reset-btn">Reset</button>
         </section>
     </main>
 </body>

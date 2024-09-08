@@ -30,14 +30,8 @@ botBoard.addEventListener('click', (event) => {
 });
 
 function attackPlayer() {
-  // The game is not truly over here, it's just to prevent the player from attacking
-  // before the bot attack shows up
-  gameOver = true;
   RealPlayer.board.receiveRandomAttack();
-  setTimeout(() => {
-    renderBoard(RealPlayer, playerBoard, false);
-    gameOver = false;
-  }, 500);
+  renderBoard(RealPlayer, playerBoard, false);  
 };
 
 function attackBot(x, y) { 

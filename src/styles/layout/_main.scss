@@ -5,3 +5,13 @@
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: 3em 1fr 5fr 2fr;
 };
+
+.github {
+  grid-row: -2 / -1;
+  grid-column: 1 / 2;
+  text-decoration: none;
+
+  padding: 1em;
+  justify-self: start;
+  align-self: end;
+}

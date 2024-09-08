@@ -11,3 +11,11 @@ export function removeAllChilds(element) {
     element.removeChild(element.lastChild);
   };
 }
+
+export function hideElement(element) {
+  element.classList.add('hidden')
+}
+
+export function unhideElement(element) {
+  element.classList.remove('hidden')
+}

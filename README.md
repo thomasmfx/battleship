@@ -6,7 +6,7 @@ This project is a web implementation of the good old battleship game. The user c
 
 ## Preview
 
-Deploy link: [thomasmfx.github.io/battleship](https://thomasmfx.github.io/battleship/)
+Live preview: [thomasmfx.github.io/battleship](https://thomasmfx.github.io/battleship/)
 
 ![Gif of a short gameplay](./assets/project-preview.gif)
 
